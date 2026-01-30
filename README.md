@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/MikhailTheBear/BearPanel" target="_blank">
-    <img src="https://raw.githubusercontent.com/MikhailTheBear/BearPanel/main/public/logo.svg" width="200" alt="BearPanel Logo">
+    <img src="https://raw.githubusercontent.com/MikhailTheBear/BearPanel/main/public/logo.svg" width="500" alt="BearPanel Logo">
   </a>
 </p>
 
