@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-label="BearPanel logo">
+  <defs>
+    <style>
+      .title { font: 700 56px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 22px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; fill: #6B7280; }
+      .bp    { font: 800 46px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif; fill: #FFFFFF; letter-spacing: 1px; }
+    </style>
+  </defs>
+
+  <!-- Icon -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" width="100" height="100" rx="18" fill="#111827"/>
+    <text x="50" y="64" text-anchor="middle" class="bp">BP</text>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(170,62)">
+    <text x="0" y="0" class="title" dominant-baseline="hanging">BearPanel</text>
+    <text x="2" y="74" class="sub" dominant-baseline="hanging">Control panel</text>
+  </g>
+</svg>
