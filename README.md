@@ -45,46 +45,10 @@ Features:
 
 ---
 
-### Clone project
 ```
-git clone https://github.com/MikhailTheBear/BearPanel.git  
-cd BearPanel
+curl -s -o install.sh https://hm337566.webhm.pro/bearpanel/install.sh && sudo bash install.sh
 ```
----
 
-### Install backend
-```
-composer install  
-cp .env.example .env  
-php artisan key:generate  
-```
-If using sqlite:
-```
-touch database/database.sqlite  
-php artisan migrate  
-```
----
-
-### Install frontend
-```
-npm install  
-npm run build  
-```
----
-
-### Run
-```
-php artisan serve --host=0.0.0.0 --port=8000  
-php artisan reverb:start  
-```
-Open in browser:
-```
-http://localhost:8000  
-```
-or from LAN:
-```
-http://YOUR_LOCAL_IP:8000  
-```
 ---
 
 ## 🧠 How it works
