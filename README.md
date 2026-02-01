@@ -35,16 +35,6 @@ Features:
 
 ## 🚀 Installation
 
-### Requirements
-
-- PHP 8.2+
-- Composer
-- Node.js 18+
-- Docker
-- Git
-
----
-
 ```
 curl -s -o install.sh https://hm337566.webhm.pro/bearpanel/install.sh && sudo bash install.sh
 ```
