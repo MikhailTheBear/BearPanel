@@ -25,7 +25,7 @@ class BearpanelAgent extends Command
                 ->whereNotNull('container_id')
                 ->get();
 
-            if ($debug) $this->line('['.now()->format('H:i:s').'] running=' . $running->count());
+            if ($debug) $this->line('['.now()->format('H:i:s').'] servers running: ' . $running->count());
 
             foreach ($running as $server) {
                 try {

@@ -15,7 +15,7 @@ export default defineConfig({
         strictPort: true,
 
         hmr: {
-            host: 'localhost', // ТВОЙ IP из сети
+            host: '10.58.6.117', // ТВОЙ IP из сети
             port: 5173,
         },
     },
