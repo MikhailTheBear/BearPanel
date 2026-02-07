@@ -27,15 +27,15 @@
                     </x-nav-link>
 
                     @if (Auth::user()?->is_admin)
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-yellow-100 text-yellow-800 border border-yellow-200">
+                    
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-lime-100 text-lime-800 border border-lime-200">
                             ADMIN
                         </span>
-
                         <x-dropdown align="left" width="48">
                             <x-slot name="trigger">
                                 <button type="button"
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Admin
+                                    Admin Tools
                                     <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -43,8 +43,14 @@
                                     </svg>
                                 </button>
                             </x-slot>
+                            
 
                             <x-slot name="content">
+
+                                <x-dropdown-link href="{{ route('admin.overview') }}">
+                                    Overview
+                                </x-dropdown-link>
+
                                 <x-dropdown-link href="{{ route('admin.nodes.index') }}">
                                     Nodes
                                 </x-dropdown-link>
@@ -60,6 +66,11 @@
                                 </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
+                    @else
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-sky-100 text-sky-800 border border-sky-200">
+                            USER
+                        </span>
+                    
                     @endif
                 </div>
             </div>

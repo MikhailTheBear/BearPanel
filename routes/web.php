@@ -8,6 +8,7 @@ use App\Livewire\Servers\Console as ServerConsole;
 use App\Livewire\Servers\Files as ServerFiles;
 use App\Livewire\Servers\Settings as ServerSettings;
 
+use App\Livewire\Admin\Overview as AdminOverview;
 use App\Livewire\Admin\Nodes\Index as AdminNodesIndex;
 use App\Livewire\Admin\Servers\Index as AdminServersIndex;
 use App\Livewire\Admin\Servers\Show as AdminServerShow;
@@ -31,6 +32,7 @@ Route::middleware([
 
     // Admin
     Route::middleware(['admin'])->prefix('admin')->group(function () {
+        Route::get('/', AdminOverview::class)->name('admin.overview');
         Route::get('/nodes', AdminNodesIndex::class)->name('admin.nodes.index');
         Route::get('/servers', AdminServersIndex::class)->name('admin.servers.index');
         Route::get('/servers/{server}', AdminServerShow::class)->name('admin.servers.show');
