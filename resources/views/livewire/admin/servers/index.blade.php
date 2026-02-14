@@ -1,16 +1,16 @@
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-semibold">Admin — Servers</h1>
+        <h1 class="text-2xl font-semibold">{{ __('Admin_Servers') }}</h1>
 
         <div class="flex gap-2">
             <input
                 type="text"
                 wire:model.debounce.400ms="search"
-                placeholder="Search server or owner email..."
+                placeholder="{{ __('Search server or owner email...') }}"
                 class="rounded-md border-gray-300"
             />
             <button wire:click="create" class="px-3 py-2 rounded-md bg-gray-900 text-white">
-                New Server
+                {{ __('New Server') }}
             </button>
         </div>
     </div>
@@ -27,11 +27,11 @@
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr class="text-left text-sm text-gray-600">
-                            <th class="p-3">Name</th>
-                            <th class="p-3">Owner</th>
-                            <th class="p-3">Node</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3">Port</th>
+                            <th class="p-3">{{ __('Name') }}</th>
+                            <th class="p-3">{{ __('Owner') }}</th>
+                            <th class="p-3">{{ __('Node') }}</th>
+                            <th class="p-3">{{ __('Status') }}</th>
+                            <th class="p-3">{{ __('Port') }}</th>
                             <th class="p-3 w-40"></th>
                         </tr>
                     </thead>
@@ -43,29 +43,29 @@
                                 <td class="p-3 text-sm text-gray-700">{{ $server->node?->name ?? '—' }}</td>
                                 <td class="p-3">
                                     <span class="inline-flex px-2 py-1 rounded text-xs bg-gray-100">
-                                        {{ $server->status }}
+                                        {{ __('server.status.' . ($server->status ?? 'unknown')) }}
                                     </span>
                                 </td>
                                 <td class="p-3 text-sm font-mono text-gray-800">
-                                    {{ $server->allocation_port ?? 'auto' }}
+                                    {{ $server->allocation_port ?? __('auto') }}
                                 </td>
                                 <td class="p-3 text-right">
                                     <a href="{{ route('admin.servers.show', $server) }}" class="text-gray-900">
-                                        Open
+                                        {{ __('Open') }}
                                     </a>
 
-                                    <button wire:click="edit({{ $server->id }})" class="text-blue-600 ml-3">Edit</button>
+                                    <button wire:click="edit({{ $server->id }})" class="text-blue-600 ml-3">{{ __('Edit') }}</button>
 
                                     <button wire:click="delete({{ $server->id }})"
                                             class="text-red-600 ml-3"
-                                            onclick="return confirm('Delete server?')">
-                                        Delete
+                                            onclick="return confirm('{{ __('Delete server?') }}')">
+                                        {{ __('Delete') }}
                                     </button>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td class="p-3 text-gray-500" colspan="6">No servers yet.</td>
+                                <td class="p-3 text-gray-500" colspan="6">{{ __('No servers yet.') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -79,26 +79,26 @@
 
         <div class="bg-white shadow rounded-lg p-5">
             <h2 class="text-lg font-semibold mb-4">
-                {{ $editingId ? 'Edit Server' : 'Create Server' }}
+                {{ $editingId ? __('Edit Server') : __('Create Server') }}
             </h2>
 
             <div class="space-y-3">
                 <div>
-                    <label class="block text-sm text-gray-700">Name</label>
+                    <label class="block text-sm text-gray-700">{{ __('Name') }}</label>
                     <input type="text" wire:model="name" class="w-full rounded-md border-gray-300">
                     @error('name') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm text-gray-700">Owner email</label>
+                    <label class="block text-sm text-gray-700">{{ __('Owner email') }}</label>
                     <input type="text" wire:model="owner_email" class="w-full rounded-md border-gray-300" placeholder="user@example.com">
                     @error('owner_email') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm text-gray-700">Node</label>
+                    <label class="block text-sm text-gray-700">{{ __('Node') }}</label>
                     <select wire:model="node_id" class="w-full rounded-md border-gray-300">
-                        <option value="0">— select node —</option>
+                        <option value="0">{{ __('— select node —') }}</option>
                         @foreach($nodes as $n)
                             <option value="{{ $n->id }}">{{ $n->name }} ({{ $n->fqdn }}:{{ $n->daemon_port }})</option>
                         @endforeach
@@ -107,54 +107,52 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm text-gray-700">Status</label>
+                    <label class="block text-sm text-gray-700">{{ __('Status') }}</label>
                     <select wire:model="status" class="w-full rounded-md border-gray-300">
-                        <option value="installing">installing</option>
-                        <option value="running">running</option>
-                        <option value="stopped">stopped</option>
-                        <option value="suspended">suspended</option>
+                        <option value="running">{{ __('Running') }}</option>
+                        <option value="stopped">{{ __('Stopped') }}</option>
                     </select>
                     @error('status') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                 </div>
 
                 {{-- ✅ FIXED PORT --}}
                 <div>
-                    <label class="block text-sm text-gray-700">Port (fixed)</label>
+                    <label class="block text-sm text-gray-700">{{ __('Port') }}</label>
                     <input type="number"
                            wire:model="allocation_port"
                            class="w-full rounded-md border-gray-300"
-                           placeholder="e.g. 25566 (leave empty = auto)">
+                           placeholder="{{ __('e.g. 25566 (leave empty = auto)') }}">
                     @error('allocation_port') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                     <div class="text-xs text-gray-500 mt-1">
-                        Leave empty to auto-allocate. If you set a port, it will stay fixed.
+                        {{ __('Leave empty to auto-allocate. If you set a port, it will stay fixed.') }}
                     </div>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-sm text-gray-700">CPU</label>
-                        <input type="number" wire:model="limit_cpu" class="w-full rounded-md border-gray-300" placeholder="e.g. 100">
+                        <label class="block text-sm text-gray-700">{{ __('CPU') }}</label>
+                        <input type="number" wire:model="limit_cpu" class="w-full rounded-md border-gray-300" placeholder="{{ __('e.g.') }} 100">
                         @error('limit_cpu') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-700">RAM (MB)</label>
-                        <input type="number" wire:model="limit_ram" class="w-full rounded-md border-gray-300" placeholder="e.g. 1024">
+                        <label class="block text-sm text-gray-700">{{ __('RAM (MB)') }}</label>
+                        <input type="number" wire:model="limit_ram" class="w-full rounded-md border-gray-300" placeholder="{{ __('e.g.') }} 1024">
                         @error('limit_ram') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-700">Disk (MB)</label>
-                        <input type="number" wire:model="limit_disk" class="w-full rounded-md border-gray-300" placeholder="e.g. 10000">
+                        <label class="block text-sm text-gray-700">{{ __('Disk (MB)') }}</label>
+                        <input type="number" wire:model="limit_disk" class="w-full rounded-md border-gray-300" placeholder="{{ __('e.g.') }} 10000">
                         @error('limit_disk') <div class="text-sm text-red-600">{{ $message }}</div> @enderror
                     </div>
                 </div>
 
                 <div class="pt-2 flex gap-2">
                     <button wire:click="save" class="px-3 py-2 rounded-md bg-gray-900 text-white">
-                        Save
+                        {{ __('Save') }}
                     </button>
                     @if($editingId)
                         <button wire:click="create" class="px-3 py-2 rounded-md border">
-                            Cancel
+                            {{ __('Cancel') }}
                         </button>
                     @endif
                 </div>

@@ -37,13 +37,13 @@ class Settings extends Component
 
                     // ❌ Запрещаем хардкод -Xmx (числа, G/M/K)
                     if (preg_match('/-Xmx\s*\d+\s*[kKmMgG]?/u', $v)) {
-                        $fail('Do not hardcode -Xmx value. Use {{RAM}} variable.');
+                        $fail(__('Do not hardcode -Xmx value. Use {{RAM}} variable.'));
                         return;
                     }
 
                     // ❌ Запрещаем -Xmx без {{RAM}}
                     if (preg_match('/-Xmx(?!\s*\{\{RAM\}\})/u', $v)) {
-                        $fail('-Xmx must use {{RAM}} variable.');
+                        $fail(__('-Xmx must use {{RAM}} variable.'));
                         return;
                     }
 
@@ -64,7 +64,9 @@ class Settings extends Component
 
                     foreach ($m[1] as $var) {
                         if (!in_array($var, $allowed, true)) {
-                            $fail("Unknown variable {{$var}} is not allowed.");
+                            $fail(__('validation.unknown_variable', [
+    'var' => '{{' . $var . '}}',
+]));
                             return;
                         }
                     }
@@ -103,7 +105,7 @@ class Settings extends Component
 
         $this->refreshServer();
 
-        session()->flash('status', 'Settings saved.');
+        session()->flash('status', __('Settings saved.'));
     }
 
     public function render()

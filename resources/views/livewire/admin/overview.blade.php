@@ -1,118 +1,178 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Admin overview
+<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+
+    {{-- Flash Success --}}
+    @if (session()->has('status'))
+        <div class="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    {{-- SMTP Error --}}
+    @if ($smtp_failed)
+        <div class="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
+            <strong>{{ __('SMTP Error') }}:</strong><br>
+            {{ $smtp_error }}
+        </div>
+    @endif
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        {{-- LEFT: Overview --}}
+        <div class="bg-white rounded-xl shadow border border-gray-200 p-6 space-y-4">
+
+            <h2 class="text-lg font-semibold">
+                {{ __('Overview') }}
             </h2>
 
-            <div class="text-sm text-gray-500">
-                BearPanel v{{ $panelVersion }}
+            <div class="space-y-2 text-sm text-gray-700">
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">APP_NAME</span>
+                    <span class="font-medium">{{ $app_name }}</span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">PANEL_VERSION</span>
+                    <span class="font-medium">{{ $panel_version }}</span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">APP_ENV</span>
+                    <span class="font-medium">{{ $app_env }}</span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">APP_LOCALE</span>
+                    <span class="font-medium">{{ $app_locale }}</span>
+                </div>
+
+                <hr>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">PHP</span>
+                    <span class="font-medium">{{ phpversion() }}</span>
+                </div>
+
+                <div class="flex justify-between">
+                    <span class="text-gray-500">Laravel</span>
+                    <span class="font-medium">{{ app()->version() }}</span>
+                </div>
+
             </div>
         </div>
-    </x-slot>
 
-    <div class="py-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        {{-- RIGHT: Settings --}}
+        <div class="bg-white rounded-xl shadow border border-gray-200 p-6 space-y-6">
 
-                {{-- Stats --}}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white shadow rounded-lg p-5">
-                        <div class="text-sm text-gray-500">Users</div>
-                        <div class="mt-2 text-2xl font-semibold text-gray-900">
-                            {{ $usersCount }}
-                        </div>
-                    </div>
+            <h2 class="text-lg font-semibold">
+                {{ __('Settings') }}
+            </h2>
 
-                    <div class="bg-white shadow rounded-lg p-5">
-                        <div class="text-sm text-gray-500">Nodes</div>
-                        <div class="mt-2 text-2xl font-semibold text-gray-900">
-                            {{ $nodesCount }}
-                        </div>
-                    </div>
+            {{-- Language --}}
+            <div>
+                <label class="block text-sm font-medium mb-1">
+                    {{ __('Language') }}
+                </label>
 
-                    <div class="bg-white shadow rounded-lg p-5">
-                        <div class="text-sm text-gray-500">Servers</div>
-                        <div class="mt-2 text-2xl font-semibold text-gray-900">
-                            {{ $serversCount }}
-                        </div>
-                    </div>
+                <select wire:model="app_locale"
+                        class="w-full rounded-lg border-gray-300 text-sm">
+                    @foreach($locales as $code => $label)
+                        <option value="{{ $code }}">
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- SMTP --}}
+            <div class="border-t pt-6 space-y-4">
+
+                <h3 class="text-md font-semibold">
+                    SMTP
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <input wire:model="mail_host"
+                           type="text"
+                           placeholder="MAIL_HOST"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_port"
+                           type="text"
+                           placeholder="MAIL_PORT"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_username"
+                           type="text"
+                           placeholder="MAIL_USERNAME"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_password"
+                           type="password"
+                           placeholder="MAIL_PASSWORD"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_encryption"
+                           type="text"
+                           placeholder="MAIL_ENCRYPTION"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_from_address"
+                           type="email"
+                           placeholder="MAIL_FROM_ADDRESS"
+                           class="rounded-lg border-gray-300 text-sm">
+
+                    <input wire:model="mail_from_name"
+                           type="text"
+                           placeholder="MAIL_FROM_NAME"
+                           class="rounded-lg border-gray-300 text-sm">
+
                 </div>
 
-                {{-- Panel & System --}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white shadow rounded-lg p-5">
-                        <h3 class="text-lg font-semibold mb-4">
-                            Panel
-                        </h3>
+                {{-- Test Email --}}
+                <div class="pt-4">
+                    <label class="block text-sm font-medium mb-1">
+                        {{ __('Test email recipient (optional)') }}
+                    </label>
 
-                        <div class="space-y-2 text-sm">
-                            <div>
-                                <span class="text-gray-500">Name:</span>
-                                <span class="font-medium">{{ $panelName }}</span>
-                            </div>
+                    <input wire:model.defer="test_email"
+                           type="email"
+                           placeholder="test@example.com"
+                           class="w-full rounded-lg border-gray-300 text-sm">
 
-                            <div>
-                                <span class="text-gray-500">Version:</span>
-                                <span class="font-mono">{{ $panelVersion }}</span>
-                            </div>
-
-                            <div>
-                                <span class="text-gray-500">Environment:</span>
-                                <span class="font-mono">{{ $env }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white shadow rounded-lg p-5">
-                        <h3 class="text-lg font-semibold mb-4">
-                            System
-                        </h3>
-
-                        <div class="space-y-2 text-sm">
-                            <div>
-                                <span class="text-gray-500">PHP:</span>
-                                <span class="font-mono">{{ $phpVersion }}</span>
-                            </div>
-
-                            <div>
-                                <span class="text-gray-500">Laravel:</span>
-                                <span class="font-mono">{{ $laravelVersion }}</span>
-                            </div>
-
-                            <div>
-                                <span class="text-gray-500">Server time:</span>
-                                <span class="font-mono">
-                                    {{ now()->format('Y-m-d H:i:s') }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    @error('test_email')
+                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                {{-- Quick links --}}
-                <div class="bg-white shadow rounded-lg p-5">
-                    <h3 class="text-lg font-semibold mb-3">
-                        Quick links
-                    </h3>
+                {{-- Buttons --}}
+                <div class="flex gap-3 pt-4">
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <a href="{{ route('admin.servers.index') }}"
-                           class="underline">
-                            Manage servers
-                        </a>
+                    <button wire:click="save"
+                            class="px-4 py-2 rounded-lg bg-gray-900 text-white text-sm">
+                        {{ __('Save') }}
+                    </button>
 
-                        <a href="{{ route('admin.nodes.index') }}"
-                           class="underline">
-                            Manage nodes
-                        </a>
+                    <button wire:click="sendTestEmail"
+                            wire:loading.attr="disabled"
+                            wire:target="sendTestEmail"
+                            class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">
 
-                        <a href="{{ route('servers.index') }}"
-                           class="underline">
-                            User view
-                        </a>
-                    </div>
+                        <span wire:loading.remove wire:target="sendTestEmail">
+                            {{ __('Send test email') }}
+                        </span>
+
+                        <span wire:loading wire:target="sendTestEmail">
+                            {{ __('Sending...') }}
+                        </span>
+                    </button>
+
                 </div>
+
+            </div>
 
         </div>
+
     </div>
 </div>

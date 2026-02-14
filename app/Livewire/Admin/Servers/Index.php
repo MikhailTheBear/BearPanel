@@ -130,13 +130,13 @@ class Index extends Component
         $this->resetForm();
         $this->editingId = null;
 
-        session()->flash('status', 'Server saved.');
+        session()->flash('status', __('Server saved.'));
     }
 
     public function delete(int $id): void
     {
         Server::whereKey($id)->delete();
-        session()->flash('status', 'Server deleted.');
+        session()->flash('status', __('Server deleted.'));
     }
 
     private function resetForm(): void

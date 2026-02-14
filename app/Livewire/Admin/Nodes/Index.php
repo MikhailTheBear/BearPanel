@@ -74,7 +74,7 @@ class Index extends Component
         }
 
         if ($q->exists()) {
-            $this->addError('fqdn', 'This FQDN + port is already used.');
+            $this->addError('fqdn', __('This FQDN + port is already used.'));
             return;
         }
 
@@ -86,13 +86,13 @@ class Index extends Component
         $this->resetForm();
         $this->editingId = null;
 
-        session()->flash('status', 'Node saved.');
+        session()->flash('status', __('Node saved.'));
     }
 
     public function delete(int $id): void
     {
         Node::whereKey($id)->delete();
-        session()->flash('status', 'Node deleted.');
+        session()->flash('status',  __('Node deleted.'));
     }
 
     private function resetForm(): void

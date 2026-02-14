@@ -1,17 +1,17 @@
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-semibold">My Servers</h1>
-        <div class="text-sm text-gray-500">Servers assigned to your account</div>
+        <h1 class="text-2xl font-semibold">{{ __('My Servers') }}</h1>
+        <div class="text-sm text-gray-500">{{ __('Servers assigned to your account') }}</div>
     </div>
 
     <div class="bg-white shadow rounded-lg overflow-hidden">
         <table class="w-full">
             <thead class="bg-gray-50">
                 <tr class="text-left text-sm text-gray-600">
-                    <th class="p-3">Name</th>
-                    <th class="p-3">Node</th>
-                    <th class="p-3">Status</th>
-                    <th class="p-3">Limits</th>
+                    <th class="p-3">{{ __('Name') }}</th>
+                    <th class="p-3">{{ __('Node') }}</th>
+                    <th class="p-3">{{ __('Status') }}</th>
+                    <th class="p-3">{{ __('Limits') }}</th>
                 </tr>
             </thead>
             <tbody class="divide-y">
@@ -28,19 +28,19 @@
                         </td>
                         <td class="p-3">
                             <span class="inline-flex px-2 py-1 rounded text-xs bg-gray-100">
-                                {{ $server->status }}
+                                {{ __('server.status.' . ($server->status ?? 'unknown')) }}
                             </span>
                         </td>
                         <td class="p-3 text-sm text-gray-700">
                             @php($l = $server->limits ?? [])
-                            CPU: {{ $l['cpu'] ?? '—' }} |
-                            RAM: {{ $l['ram'] ?? '—' }} MB |
-                            Disk: {{ $l['disk'] ?? '—' }} MB
+                            {{ __('CPU') }}: {{ $l['cpu'] ?? '—' }} |
+                            {{ __('RAM') }}: {{ $l['ram'] ?? '—' }} {{ __('MB') }} |
+                            {{ __('Disk') }}: {{ $l['disk'] ?? '—' }} {{ __('MB') }}
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td class="p-3 text-gray-500" colspan="4">No servers yet.</td>
+                        <td class="p-3 text-gray-500" colspan="4">{{ __('No servers yet.') }}</td>
                     </tr>
                 @endforelse
             </tbody>

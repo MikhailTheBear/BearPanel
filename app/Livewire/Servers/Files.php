@@ -176,7 +176,7 @@ class Files extends Component
 
         File::put($abs, $this->editor);
 
-        session()->flash('status', 'Saved.');
+        session()->flash('status', __('Saved.'));
         $this->loadItems();
     }
 
@@ -198,7 +198,7 @@ class Files extends Component
 
         if ($this->renameRel === $rel) $this->closeRename();
 
-        session()->flash('status', 'Deleted.');
+        session()->flash('status', __('Deleted.'));
         $this->loadItems(); // важно: НЕ меняем path, не "кидает" наверх
     }
 
@@ -225,7 +225,7 @@ class Files extends Component
         }
 
         $this->uploads = [];
-        session()->flash('status', 'Uploaded.');
+        session()->flash('status', __('Uploaded.'));
         $this->loadItems();
     }
 
@@ -277,7 +277,7 @@ class Files extends Component
 
         $absFrom = $this->absPath($rel);
         if (!File::exists($absFrom)) {
-            $this->renameError = 'Source not found.';
+            $this->renameError = __('Source not found.');
             return;
         }
 
@@ -291,12 +291,12 @@ class Files extends Component
         $absTo = rtrim($absParent, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $newName;
 
         if (File::exists($absTo)) {
-            $this->renameError = 'Target already exists.';
+            $this->renameError = __('Target already exists.');
             return;
         }
 
         if (!@rename($absFrom, $absTo)) {
-            $this->renameError = 'Rename failed.';
+            $this->renameError = __('Rename failed.');
             return;
         }
 
@@ -305,7 +305,7 @@ class Files extends Component
             $this->selected = $newRel;
         }
 
-        session()->flash('status', 'Renamed.');
+        session()->flash('status', __('Renamed.'));
         $this->closeRename();
         $this->loadItems();
     }
@@ -343,13 +343,13 @@ class Files extends Component
         $abs = rtrim($dirAbs, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $name;
 
         if (File::exists($abs)) {
-            $this->createError = 'Already exists.';
+            $this->createError = __('Already exists.');
             return;
         }
 
         if ($this->createType === 'folder') {
             File::ensureDirectoryExists($abs);
-            session()->flash('status', 'Folder created.');
+            session()->flash('status', __('Folder created.'));
             $this->closeCreate();
             $this->loadItems();
             return;
@@ -360,7 +360,7 @@ class Files extends Component
 
         $newRel = ltrim(trim(($this->path ? $this->path.'/' : '') . $name, '/'), '/');
 
-        session()->flash('status', 'File created.');
+        session()->flash('status', __('File created.'));
         $this->closeCreate();
         $this->loadItems();
 
@@ -374,17 +374,17 @@ class Files extends Component
         $name = str_replace(["\0", "\r", "\n"], '', $name);
 
         if ($name === '' || $name === '.' || $name === '..') {
-            $error = 'Invalid name.';
+            $error = __('Invalid name.');
             return null;
         }
 
         if (str_contains($name, '/') || str_contains($name, '\\')) {
-            $error = 'Name must not contain slashes.';
+            $error = __('Name must not contain slashes.');
             return null;
         }
 
         if (preg_match('/[:]/', $name)) {
-            $error = 'Invalid character: ":"';
+            $error = __('Invalid character: ":"');
             return null;
         }
 
