@@ -4,4 +4,4 @@
 /storage/*.key
 /storage/logs
 /public/hot
-/public/storage
+/public/storage.DS_Store

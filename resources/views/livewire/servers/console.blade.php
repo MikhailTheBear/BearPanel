@@ -1,4 +1,6 @@
-<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+<div wire:poll.10s="pollHeartbeat"
+     class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+
     <div class="flex items-start justify-between gap-4 mb-2">
         <div>
             <div class="text-sm text-gray-500">{{ __('Server') }}</div>
@@ -29,6 +31,13 @@
 
     @include('servers._tabs', ['server' => $server])
 
+    {{-- 🔴 Reverb warning --}}
+    @if(!$reverbOnline)
+        <div class="my-3 p-3 rounded bg-red-50 border border-red-200 text-red-800">
+            {{ __('We are having trouble connecting to Reverb. Real-time features are disabled.') }}
+        </div>
+    @endif
+
     @error('runtime')
         <div class="my-3 p-3 rounded bg-red-50 border border-red-200 text-red-800">
             {{ $message }}
@@ -36,10 +45,28 @@
     @enderror
 
     <div class="mb-4 flex gap-2">
-        <button wire:click="start" class="px-3 py-2 rounded-md bg-gray-900 text-white">{{ __('start_server') }}</button>
-        <button wire:click="stop" class="px-3 py-2 rounded-md border">{{ __('stop_server') }}</button>
-        <button wire:click="restart" class="px-3 py-2 rounded-md border">{{ __('restart_server') }}</button>
-        <button wire:click="clear" class="px-3 py-2 rounded-md border">{{ __('clear_console') }}</button>
+        <button wire:click="start"
+                @disabled(!$reverbOnline)
+                class="px-3 py-2 rounded-md bg-gray-900 text-white disabled:opacity-50">
+            {{ __('start_server') }}
+        </button>
+
+        <button wire:click="stop"
+                @disabled(!$reverbOnline)
+                class="px-3 py-2 rounded-md border disabled:opacity-50">
+            {{ __('stop_server') }}
+        </button>
+
+        <button wire:click="restart"
+                @disabled(!$reverbOnline)
+                class="px-3 py-2 rounded-md border disabled:opacity-50">
+            {{ __('restart_server') }}
+        </button>
+
+        <button wire:click="clear"
+                class="px-3 py-2 rounded-md border">
+            {{ __('clear_console') }}
+        </button>
     </div>
 
     <div class="bg-white shadow rounded-lg p-5">
@@ -53,12 +80,15 @@
 
         <div class="mt-4 flex gap-2">
             <input
-                class="flex-1 rounded-md border-gray-300"
+                class="flex-1 rounded-md border-gray-300 disabled:opacity-50"
                 placeholder="{{ __('type command...') }}"
                 wire:model.defer="command"
                 wire:keydown.enter="send"
+                @disabled(!$reverbOnline)
             >
-            <button wire:click="send" class="px-3 py-2 rounded-md bg-gray-900 text-white">
+            <button wire:click="send"
+                    @disabled(!$reverbOnline)
+                    class="px-3 py-2 rounded-md bg-gray-900 text-white disabled:opacity-50">
                 {{ __('Send') }}
             </button>
         </div>
@@ -78,7 +108,7 @@
                     box.innerHTML = '';
                     for (const row of (lines || [])) {
                         const div = document.createElement('div');
-                        div.textContent = row.line;
+                        div.textContent = row.line ?? row;
                         box.appendChild(div);
                     }
                     box.scrollTop = box.scrollHeight;

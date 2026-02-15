@@ -9,11 +9,6 @@
         </div>
 
         <div class="text-right">
-            <div class="flex gap-2 justify-end">
-                <button wire:click="start" class="px-3 py-2 rounded bg-gray-900 text-white">{{ __('start_server') }}</button>
-                <button wire:click="stop" class="px-3 py-2 rounded border">{{ __('stop_server') }}</button>
-                <button wire:click="restart" class="px-3 py-2 rounded border">{{ __('restart_server') }}</button>
-            </div>
 
             <div class="mt-2 text-sm text-gray-500">{{ __('Status') }}</div>
             <div class="inline-flex px-3 py-1 rounded bg-gray-100 text-sm">

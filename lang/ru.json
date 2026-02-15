@@ -212,6 +212,8 @@
     "Sending...": "Отправка...",
     "SMTP Error": "Ошибка SMTP",
     "Test email sent successfully.": "Тестовое письмо успешно отправлено.",
+    "Test email recipient (optional)": "Получатель тестового письма (необязательно)",
+    "We are having trouble connecting to Reverb. Real-time features are disabled.": "У нас проблемы с подключением к Reverb. Функции реального времени отключены.",
     "_meta": {
         "display_name": "Русский"
     }

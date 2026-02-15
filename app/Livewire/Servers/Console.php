@@ -11,10 +11,10 @@ class Console extends Component
 {
     public Server $server;
 
-    /** @var array<int, array{ts:string,type:string,line:string}> */
     public array $lines = [];
-
     public string $command = '';
+
+    public bool $reverbOnline = true;
 
     public function mount(Server $server, ConsoleBus $bus): void
     {
@@ -23,7 +23,27 @@ class Console extends Component
         $this->server = $server->load('node', 'owner');
         $this->lines = $bus->getBuffer($this->server);
 
+        $this->checkReverb();
         $this->dispatch('console:replace', lines: $this->lines);
+    }
+
+    public function pollHeartbeat(): void
+    {
+        $this->checkReverb();
+    }
+
+    protected function checkReverb(): void
+    {
+        $host = parse_url(config('broadcasting.connections.reverb.host') ?? 'http://127.0.0.1', PHP_URL_HOST) ?? '127.0.0.1';
+        $port = config('broadcasting.connections.reverb.port', 8080);
+
+        try {
+            $conn = @fsockopen($host, $port, $errno, $errstr, 1);
+            $this->reverbOnline = $conn !== false;
+            if ($conn) fclose($conn);
+        } catch (\Throwable) {
+            $this->reverbOnline = false;
+        }
     }
 
     public function refreshConsole(ConsoleBus $bus): void
@@ -33,16 +53,24 @@ class Console extends Component
         $this->dispatch('console:replace', lines: $this->lines);
     }
 
+    protected function guardReverb(): bool
+    {
+        if (!$this->reverbOnline) {
+            $this->addError('runtime', __('Reverb is not running.'));
+            return false;
+        }
+        return true;
+    }
+
     public function start(DockerRuntime $rt, ConsoleBus $bus): void
     {
-        $this->server->refresh();
-        $bus->push($this->server, "BearPanel: The server is in the process of starting", 'sys');
+        if (!$this->guardReverb()) return;
+
+        $bus->push($this->server, "BearPanel: Starting server...", 'sys');
 
         try {
             $rt->start($this->server);
-            $bus->push($this->server, "BearPanel: Server marked as running...", 'sys');
         } catch (\Throwable $e) {
-            $bus->push($this->server, "BearPanel: ERROR: " . $e->getMessage(), 'err');
             $this->addError('runtime', $e->getMessage());
         }
 
@@ -51,14 +79,11 @@ class Console extends Component
 
     public function stop(DockerRuntime $rt, ConsoleBus $bus): void
     {
-        $this->server->refresh();
-        $bus->push($this->server, "BearPanel: Stopping server...", 'sys');
+        if (!$this->guardReverb()) return;
 
         try {
             $rt->stop($this->server);
-            $bus->push($this->server, "BearPanel: Server stopped.", 'sys');
         } catch (\Throwable $e) {
-            $bus->push($this->server, "BearPanel: ERROR: " . $e->getMessage(), 'err');
             $this->addError('runtime', $e->getMessage());
         }
 
@@ -67,14 +92,11 @@ class Console extends Component
 
     public function restart(DockerRuntime $rt, ConsoleBus $bus): void
     {
-        $this->server->refresh();
-        $bus->push($this->server, "BearPanel: Restarting server...", 'sys');
+        if (!$this->guardReverb()) return;
 
         try {
             $rt->restart($this->server);
-            $bus->push($this->server, "BearPanel: Server marked as running...", 'sys');
         } catch (\Throwable $e) {
-            $bus->push($this->server, "BearPanel: ERROR: " . $e->getMessage(), 'err');
             $this->addError('runtime', $e->getMessage());
         }
 
@@ -83,17 +105,14 @@ class Console extends Component
 
     public function send(ConsoleBus $bus, DockerRuntime $rt): void
     {
-        $this->server->refresh();
+        if (!$this->guardReverb()) return;
 
         $cmd = trim($this->command);
         if ($cmd === '') return;
 
-        $bus->push($this->server, "BearPanel: {$cmd}", 'cmd');
-
         try {
             $rt->sendCommand($this->server, $cmd);
         } catch (\Throwable $e) {
-            $bus->push($this->server, "BearPanel: ERROR: " . $e->getMessage(), 'err');
             $this->addError('runtime', $e->getMessage());
         }
 
@@ -110,6 +129,7 @@ class Console extends Component
 
     public function render()
     {
-        return view('livewire.servers.console')->layout('layouts.app');
+        return view('livewire.servers.console')
+            ->layout('layouts.app');
     }
 }
