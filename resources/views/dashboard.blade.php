@@ -11,8 +11,23 @@
         </div>
     </x-slot>
 
+    
+
+
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+        <div class="mb-4 p-3 rounded bg-yellow-50 border border-yellow-200 text-yellow-800">
+            <div class="font-semibold">👋{{ __('Goodbye') }}</div>
+            <div class="text-sm mt-1">
+                {{ __('We will shutdown soon the old panel.') }}
+            </div>
+            <div class="text-sm mt-1">
+            {{ __('Why? Because we are working on a new panel, which will be more stable and more secure.') }} <br>
+            {{ __('Please use the new panel instead.') }}
+            </div>
+        </div>
+
 
             {{-- Overview cards --}}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

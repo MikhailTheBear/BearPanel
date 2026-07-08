@@ -56,6 +56,9 @@ class DockerRuntime
         $server->update(['status' => 'running', 'container_id' => $containerId]);
     }
 
+
+    
+
     public function recreate(Server $server): void
     {
         $server->refresh();
@@ -294,7 +297,7 @@ class DockerRuntime
     private function javaImage(string $version): string
     {
         $v = trim($version);
-        if (!in_array($v, ['17', '21'], true)) $v = '21';
+        if (!in_array($v, ['17', '21', '25'], true)) $v = '21';
         return "eclipse-temurin:{$v}-jre";
     }
 

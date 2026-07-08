@@ -142,7 +142,7 @@
     "Deleted.": "Eliminado.",
     "File created.": "Archivo creado.",
     "Folder created.": "Carpeta creada.",
-    "Uploaded.": "Subido.",
+    "Uploaded. (:count)": "Subido. (:count)",
     "Saved.": "Guardado.",
     "Renamed.": "Renombrado.",
     "Invalid name.": "Nombre no válido.",
@@ -214,7 +214,17 @@
     "Test email sent successfully.": "Correo de prueba enviado correctamente.",
     "Test email recipient (optional)": "Destinatario del correo de prueba (opcional)",
     "We are having trouble connecting to Reverb. Real-time features are disabled.": "Estamos teniendo problemas para conectarnos a Reverb. Las funciones en tiempo real están deshabilitadas.",
+    "Not Found": "No encontrado",
+    "Forbidden": "Prohibido",
+    "Server Error": "Error del servidor",
+    "The page you are looking for does not exist or was moved.": "La página que buscas no existe o fue movida.",
+    "SMTP test email from BearPanel.": "Correo de prueba SMTP desde BearPanel.",
+    "SMTP Test Email": "Correo de prueba SMTP",
+    "Goodbye": "Adiós",
+    "We will shutdown soon the old panel.": "Cerramos pronto el panel antiguo.",
+    "Why? Because we are working on a new panel, which will be more stable and more secure.": "¿Por qué? Porque estamos trabajando en un nuevo panel, que será más estable y más seguro.",
+    "Please use the new panel instead.": "Por favor, use el nuevo panel en su lugar.",
     "_meta": {
-        "display_name": "Español"
+        "display_name": "🇪🇸Español"
     }
 }

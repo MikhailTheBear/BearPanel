@@ -52,8 +52,8 @@ class ConsoleBus
         Cache::put($this->key($server), $buf, now()->addHours(6));
 
         // broadcast “как в pterodactyl”
-        broadcast(new ServerLogLine($server->uuid, "[{$ts}] {$line}"))->toOthers();
-        broadcast(new ServerLogLine($server->uuid, "[{$ts}] {$line}"));
+        //broadcast(new ServerLogLine($server->uuid, "[{$ts}] {$line}"))->toOthers();
+        //broadcast(new ServerLogLine($server->uuid, "[{$ts}] {$line}"));
     }
 
     public function getCursor(Server $server): int

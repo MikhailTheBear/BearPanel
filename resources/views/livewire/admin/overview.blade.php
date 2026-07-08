@@ -1,5 +1,17 @@
 <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
 
+    <div class="mb-4 p-3 rounded bg-yellow-50 border border-yellow-200 text-yellow-800">
+            <div class="font-semibold">👋{{ __('Goodbye') }}</div>
+            <div class="text-sm mt-1">
+                {{ __('We will shutdown soon the old panel.') }}
+            </div>
+            <div class="text-sm mt-1">
+            {{ __('Why? Because we are working on a new panel, which will be more stable and more secure.') }} <br>
+            {{ __('Please use the new panel instead.') }}
+            </div>
+        </div>
+
+
     {{-- Flash Success --}}
     @if (session()->has('status'))
         <div class="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm">

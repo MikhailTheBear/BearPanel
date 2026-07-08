@@ -147,7 +147,6 @@
 
                             <button type="button"
                                     wire:click="delete(@js($it['rel']))"
-                                    onclick="return confirm('Delete?')"
                                     class="text-sm text-red-600">
                                 {{ __('Delete') }}
                             </button>

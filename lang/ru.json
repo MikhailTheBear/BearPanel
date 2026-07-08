@@ -142,7 +142,7 @@
     "Deleted.": "Удалено.",
     "File created.": "Файл создан.",
     "Folder created.": "Папка создана.",
-    "Uploaded.": "Загружено.",
+    "Uploaded. (:count)": "Загружено. (:count)",
     "Saved.": "Сохранено.",
     "Renamed.": "Переименовано.",
     "Invalid name.": "Недопустимое имя.",
@@ -214,8 +214,20 @@
     "Test email sent successfully.": "Тестовое письмо успешно отправлено.",
     "Test email recipient (optional)": "Получатель тестового письма (необязательно)",
     "We are having trouble connecting to Reverb. Real-time features are disabled.": "У нас проблемы с подключением к Reverb. Функции реального времени отключены.",
+    "Not Found": "Не найдено",
+    "Forbidden": "Запрещено",
+    "Server Error": "Ошибка сервера",
+    "The page you are looking for does not exist or was moved.": "Страница, которую вы ищете, не существует или была перемещена.",
+    "SMTP test email from BearPanel.": "Тестовое письмо SMTP от BearPanel.",
+    "SMTP Test Email": "Тестовое письмо SMTP",
+    "Goodbye": "Прощай",
+    "We will shutdown soon the old panel.": "Мы скоро закроем старую панель.",
+    "Please use the new panel instead.": "Пожалуйста, используйте новую панель вместо этого.",
+    "Why? Because we are working on a new panel, which will be more stable and more secure.": "Почему? Потому что мы работаем над новой панелью, которая будет более стабильной и безопасной.",
+    "BearPanel: Starting server...": "BearPanel: Запуск сервера...",
+    "BearPanel: Stopping server...": "BearPanel: Остановка сервера...",
     "_meta": {
-        "display_name": "Русский"
+        "display_name": "🇷🇺Русский"
     }
 
 }

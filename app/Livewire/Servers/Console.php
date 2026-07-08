@@ -35,14 +35,22 @@ class Console extends Component
     protected function checkReverb(): void
     {
         $host = parse_url(config('broadcasting.connections.reverb.host') ?? 'http://127.0.0.1', PHP_URL_HOST) ?? '127.0.0.1';
-        $port = config('broadcasting.connections.reverb.port', 8080);
+        $port = env('REVERB_PORT', 8080); // прямое использование env()
 
         try {
             $conn = @fsockopen($host, $port, $errno, $errstr, 1);
+            $wasOnline = $this->reverbOnline;
             $this->reverbOnline = $conn !== false;
             if ($conn) fclose($conn);
+            if ($this->reverbOnline && !$wasOnline) {
+                
+            $this->dispatch('reverb:status', status: 'connected', message: 'Reverb подключён');
+            } elseif (!$this->reverbOnline && $wasOnline) {
+            $this->dispatch('reverb:status', status: 'disconnected', message: 'Reverb отключён');
+            }
         } catch (\Throwable) {
             $this->reverbOnline = false;
+            $this->dispatch('reverb:status', status: 'error', message: 'Ошибка подключения к Reverb');
         }
     }
 
@@ -66,12 +74,13 @@ class Console extends Component
     {
         if (!$this->guardReverb()) return;
 
-        $bus->push($this->server, "BearPanel: Starting server...", 'sys');
+        $bus->push($this->server, __("BearPanel: Starting server..."), 'sys');
 
         try {
             $rt->start($this->server);
         } catch (\Throwable $e) {
             $this->addError('runtime', $e->getMessage());
+            $this->dispatch('console:error', message: $e->getMessage(), trace: $e->getTraceAsString());
         }
 
         $this->refreshConsole($bus);

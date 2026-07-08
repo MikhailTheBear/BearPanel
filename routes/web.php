@@ -13,8 +13,9 @@ use App\Livewire\Admin\Nodes\Index as AdminNodesIndex;
 use App\Livewire\Admin\Servers\Index as AdminServersIndex;
 use App\Livewire\Admin\Servers\Show as AdminServerShow;
 
-
-
+Route::get('/trigger/{code}', function($code) {
+    abort($code);
+});
 
 
 Route::get('/', fn () => redirect()->route('dashboard'));

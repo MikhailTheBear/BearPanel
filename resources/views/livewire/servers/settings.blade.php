@@ -53,6 +53,7 @@
             <select wire:model.defer="java_version" class="w-full rounded border-gray-300">
                 <option value="17">17</option>
                 <option value="21">21</option>
+                <option value="25">25</option>
             </select>
             @error('java_version') <div class="text-sm text-red-600 mt-1">{{ $message }}</div> @enderror
         </div>

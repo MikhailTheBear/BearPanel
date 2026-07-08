@@ -18,7 +18,7 @@ class Settings extends Component
         return [
             'jar_file' => ['required', 'string', 'max:255'],
 
-            'java_version' => ['required', 'in:17,21'],
+            'java_version' => ['required', 'in:17,21,25'],
 
             'startup_command' => [
                 'required',

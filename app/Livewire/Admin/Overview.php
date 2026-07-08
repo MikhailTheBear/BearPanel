@@ -152,9 +152,9 @@ class Overview extends Component
 
             $recipient = $this->test_email ?: auth()->user()->email;
 
-            Mail::raw('SMTP test email from BearPanel.', function ($message) use ($recipient) {
+            Mail::raw(__('SMTP test email from BearPanel.'), function ($message) use ($recipient) {
                 $message->to($recipient)
-                        ->subject('SMTP Test Email');
+                        ->subject(__('SMTP Test Email'));
             });
 
             session()->flash('status', __('Test email sent successfully.'));

@@ -142,7 +142,7 @@
     "Deleted.": "Deleted.",
     "File created.": "File created.",
     "Folder created.": "Folder created.",
-    "Uploaded.": "Uploaded.",
+    "Uploaded. (:count)": "Uploaded. (:count)",
     "Saved.": "Saved.",
     "Renamed.": "Renamed.",
     "Invalid name.": "Invalid name.",
@@ -214,7 +214,17 @@
     "Test email sent successfully.": "Test email sent successfully.",
     "Test email recipient (optional)": "Test email recipient (optional)",
     "We are having trouble connecting to Reverb. Real-time features are disabled.": "We are having trouble connecting to Reverb. Real-time features are disabled.",
+    "Not Found": "Not Found",
+    "Forbidden": "Forbidden",
+    "Server Error": "Server Error",
+    "The page you are looking for does not exist or was moved.": "The page you are looking for does not exist or was moved.",
+    "SMTP test email from BearPanel.": "SMTP test email from BearPanel.",
+    "SMTP Test Email": "SMTP Test Email",
+    "Goodbye": "Goodbye",
+    "We will shutdown soon the old panel.": "We will shutdown soon the old panel.",
+    "Why? Because we are working on a new panel, which will be more stable and more secure.": "Why? Because we are working on a new panel, which will be more stable and more secure.",
+    "Please use the new panel instead.": "Please use the new panel instead.",
     "_meta": {
-        "display_name": "English"
+        "display_name": "🇬🇧English"
     }
 }
