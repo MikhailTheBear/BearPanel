@@ -36,7 +36,7 @@ Features:
 ## 🚀 Installation
 
 ```
-curl -s -o install.sh https://hm337566.webhm.pro/bearpanel/install.sh && sudo bash install.sh
+curl -s -o install.sh https://hm337566.webhm.cloud/bearpanel/install.sh && sudo bash install.sh
 ```
 
 ---
